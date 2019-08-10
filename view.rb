@@ -12,6 +12,12 @@ class View
     return gets.chomp
   end
 
+  def ask_user_which_service
+    puts "Type 1 for french, and 2 for marmiton"
+    print "> "
+    return gets.chomp.to_i
+  end
+
   def ask_user_for_index
     puts "Index?"
     print "> "

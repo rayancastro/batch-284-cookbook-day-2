@@ -1,6 +1,7 @@
 require_relative "view"
 require_relative "recipe"
 require_relative "scrape_marmiton_service"
+require_relative "scrape_french_service"
 
 class Controller
   def initialize(cookbook)
@@ -31,8 +32,14 @@ class Controller
     # Ask user for a keyword
     keyword = @view.ask_user_for("keyword")
     # Call scraping service to get the list of recipes
-    marmiton_service = ScrapeMarmitonService.new(keyword)
-    results = marmiton_service.call
+    # ask french or marmiton
+    service = @view.ask_user_which_service
+    if service == 1
+    choosen_service = ScrapeFrenchService.new(keyword)
+    else
+    choosen_service = ScrapeMarmitonService.new(keyword)
+    end
+    results = choosen_service.call
     # Ask the user which recipe he wants to save
     @view.display(results)
     index = @view.ask_user_for_index
